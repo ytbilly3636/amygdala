@@ -1,14 +1,14 @@
 # amygdala
-amygdala model
 
 ### What is amygdala model
-Amygdala is an area of brain.
-The amygdala causes fear conditioning; a kind of classical conditioning.
+Amygdala is an area of brain.  
+The amygdala causes fear conditioning; a kind of classical conditioning.  
 Amygdala model is inspired by the amygdala and can be used for classical conditioning.
 
 ### Requirement
 * Python
 * NumPy
+* Six
 * OpenCV (Optional)
 
 ### Quick Start
@@ -17,15 +17,15 @@ $ python sonoh.py
 ```
 
 ### How to scrach amygdala model
-First of all, import layers of amygdala model.
+First of all, import layers of amygdala model.  
 In the amygdala, there are parts called lateral nucleus of amygdala (LA) and central nucleus of amygdala (CE).
 ```
 from layer import LateralNucleus as LA
 from layer import CentralNucleus as CE
 ```
 
-Secondly, construct a class of amygdala using LA and CE.
-Multiple self-organizing maps (SOMs) are used as models of LA.
+Secondly, construct a class of amygdala using LA and CE.  
+Multiple self-organizing maps (SOMs) are used as models of LA.  
 So, specify the number of SOMs and its parameters.
 ```
 class Amygdala(object):
@@ -40,10 +40,10 @@ class Amygdala(object):
         self.ce = CE(in_size=1*8*8, out_size=2)
 ```
 
-Sensory stimulus are input into an LA.
-The LA integrates and classifies the stimulus.
-Classified stimulus are input into an CE.
-The CE outputs emotional response.
+Sensory stimulus are input into an LA.  
+The LA integrates and classifies the stimulus.  
+Classified stimulus are input into an CE.  
+The CE outputs emotional response.  
 So, add a following function to the class of amygdala.
 ```
     def inference(self, xs, var=0.4):
@@ -55,8 +55,8 @@ So, add a following function to the class of amygdala.
         return y
 ```
 
-The SOMs in LA obtain self-organized map from sensory stimulus.
-The CE conditions the sensory stimulus and emotional stimulus.
+The SOMs in LA obtain self-organized map from sensory stimulus.  
+The CE conditions the sensory stimulus and emotional stimulus.  
 There learning are operated by a following function.
 ```
     def update(self, t, lr_la=0.01, var_la=0.5, lr_ce=0.1):
@@ -84,7 +84,7 @@ y = amy.inference(x)
 amy.update(t)
 ```
 
-In order to make training effective, pretrainig of LA is recommended.
+In order to make training effective, pretrainig of LA is recommended.  
 In this case, random input vector is used for pretraining.
 ```
 def pretraining():
@@ -98,8 +98,7 @@ def pretraining():
 
 ---
 
-scripted by
-
-Yuichiro Tanaka
-tanaka.yuichiro483@mail.kyutech.jp
+scripted by  
+Yuichiro Tanaka  
+tanaka.yuichiro483@mail.kyutech.jp  
 Tamukoh Laboratory, Kyushu Institute of Technology
