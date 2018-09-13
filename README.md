@@ -26,7 +26,9 @@ from layer import CentralNucleus as CE
 
 Secondly, construct a class of amygdala using LA and CE.  
 Multiple self-organizing maps (SOMs) are used as models of LA.  
-So, specify the number of SOMs and its parameters.
+So, specify the number of SOMs and its parameters.  
+Single-layer perceptron is used as model of CE.  
+So, specify the number of input and output of the perceptron.
 ```
 class Amygdala(object):
     def __init__(self):
