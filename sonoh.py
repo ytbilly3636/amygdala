@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from layer import LateralNucleus as LA
-from layer import CentralNucleus as CE
+from amygdala.layer import LateralNucleus as LA
+from amygdala.layer import CentralNucleus as CE
 
 import numpy as np
 import cv2

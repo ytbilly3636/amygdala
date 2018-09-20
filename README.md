@@ -20,8 +20,8 @@ $ python sonoh.py
 First of all, import layers of amygdala model.  
 In the amygdala, there are parts called lateral nucleus of amygdala (LA) and central nucleus of amygdala (CE).
 ```
-from layer import LateralNucleus as LA
-from layer import CentralNucleus as CE
+from amygdala.layer import LateralNucleus as LA
+from amygdala.layer import CentralNucleus as CE
 ```
 
 Secondly, construct a class of amygdala using LA and CE.  
