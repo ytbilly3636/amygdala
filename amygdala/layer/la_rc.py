@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import numpy as np
 from la import LateralNucleus
 
 class LateralNucleusRecurrent(LateralNucleus):
@@ -12,13 +13,12 @@ class LateralNucleusRecurrent(LateralNucleus):
         if self.y_buf.all() == 0:
             self.y_buf = y
         else:
-            self.y_buf = beta * self.y_buf + (1 - beta) * y
+            self.y_buf = beta * self.y_buf + y
         
         return self.y_buf
         
         
 if __name__ == '__main__':
-    import numpy as np
     import six
     import copy
     import cv2
