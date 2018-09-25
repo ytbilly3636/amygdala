@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from amygdala.layer import LateralNucleusRecurrent as LARC
-from amygdala.layer import CentralNucleus as CE
+from amygdala.layer import CentralNucleusLVQ as CELVQ
 
 import numpy as np
 import cv2
@@ -10,12 +10,12 @@ import six
 class AmygdalaRC(object):
     def __init__(self):
         self.la = LARC(la_size=1, la_map_size=(8, 8), la_in_size=3)
-        self.ce = CE(in_size=1*8*8, out_size=2)
+        self.ce = CELVQ(in_size=1*8*8, out_size=2)
     
     def reset(self):
         self.la.reset()
         
-    def inference(self, xs, var=0.5, beta=0.75):
+    def inference(self, xs, var=0.5, beta=0.5):
         h = self.la.inference(xs, var, beta)
         y = self.ce.inference(h)
         return y
@@ -49,45 +49,52 @@ pretraining()
 r = [np.array([[0.0, 0.0, 1.0]])]
 g = [np.array([[0.0, 1.0, 0.0]])]
 b = [np.array([[1.0, 0.0, 0.0]])]
-t = np.eye(2)[0].reshape(1, -1)
+t0 = np.array([[1.0, -1.0]])
+t1 = np.array([[-1.0, 1.0]])
 
 for i in six.moves.range(10):
     print('---', i, '---')
+    
     amy.reset()
     print('reset')
     print('r', amy.inference(r)[0])
     print('g', amy.inference(g)[0])
     print('b', amy.inference(b)[0])
-    amy.update(t)
+    amy.update(t0)
     
     amy.reset()
     print('reset')
     print('r', amy.inference(r)[0])
     print('b', amy.inference(b)[0])
     print('g', amy.inference(g)[0])
+    amy.update(t1)
     
     amy.reset()
     print('reset')
     print('g', amy.inference(g)[0])
     print('r', amy.inference(r)[0])
     print('b', amy.inference(b)[0])
+    amy.update(t1)
     
     amy.reset()
     print('reset')
     print('g', amy.inference(g)[0])
     print('b', amy.inference(b)[0])
     print('r', amy.inference(r)[0])
+    amy.update(t1)
     
     amy.reset()
     print('reset')
     print('b', amy.inference(b)[0])
     print('r', amy.inference(r)[0])
     print('g', amy.inference(g)[0])
+    amy.update(t1)
     
     amy.reset()
     print('reset')
     print('b', amy.inference(b)[0])
     print('g', amy.inference(g)[0])
     print('r', amy.inference(r)[0])
+    amy.update(t1)
     
     print('------')

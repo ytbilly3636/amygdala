@@ -5,3 +5,4 @@ from la_uint import LateralNucleusUint
 from ce_uint import CentralNucleusUint
 
 from la_rc import LateralNucleusRecurrent
+from ce_lvq import CentralNucleusLVQ
