@@ -30,7 +30,7 @@ amy = Amygdala()
 def pretraining():
     dammy_t = np.zeros((1, 3))
 
-    for i in six.moves.range(500):
+    for i in six.moves.range(200):
         x1 = [np.random.rand(1, 3*64*64)]
         x2 = [np.eye(3)[int(np.random.randint(3))].reshape(1, 3)]
         amy.inference(x1, x2)
@@ -58,11 +58,31 @@ print('pretraining')
 pretraining()
 
 # Person 0 at place 0 order 0
-print('cookie')
+print('A:cookie')
 for i in six.moves.range(5):
     print(could_you_get_that(0, 0, 0, 1.0))
 
 # Person 0 at place 1 order 1
-print('potato chips')
+print('A:potato chips')
 for i in six.moves.range(5):
     print(could_you_get_that(0, 1, 1, 1.0))
+    
+# Person 0 at place 2 order 2  
+print('A:potato stick')
+for i in six.moves.range(5):
+    print(could_you_get_that(0, 2, 2, 1.0))
+    
+# Person 1 at place 2 order 0
+print('B:cookie')
+for i in six.moves.range(5):
+    print(could_you_get_that(0, 0, 0, 1.0))
+
+# Person 1 at place 0 order 1
+print('B:potato chips')
+for i in six.moves.range(5):
+    print(could_you_get_that(0, 1, 1, 1.0))
+    
+# Person 1 at place 1 order 2  
+print('B:potato stick')
+for i in six.moves.range(5):
+    print(could_you_get_that(0, 2, 2, 1.0))
