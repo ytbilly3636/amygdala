@@ -21,7 +21,7 @@ class CentralNucleusUint(CentralNucleus):
             import sys; sys.exit('t.shape must be (batch_size, out_size)')
     
         y_max = 255.0 ** 2 * self.w.shape[1]
-        if np.max(t) != y_max && np.max(t) == 0:
+        if np.max(t) != y_max and np.max(t) == 0:
             t *= y_max / np.max(t)
             t = t.astype(np.int32)
     
