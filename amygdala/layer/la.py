@@ -12,7 +12,8 @@ class SOM(object):
         
     def inference(self, x, var=0.4):
         self.x_buf = x.reshape(-1, self.w.shape[2])
-        sim = self.__cosine_similarity(self.x_buf)
+        #sim = self.__cosine_similarity(self.x_buf)
+        sim = self.__l2norm_similarity(self.x_buf)
         self.c_buf = self.__winner_indices(sim)
         return self.__gaussian(self.c_buf, var)
 
@@ -26,6 +27,13 @@ class SOM(object):
         w_size = np.sum(self.w ** 2, axis=2).reshape(self.w.shape[0], self.w.shape[1], 1)
         cos = np.tensordot(x / x_size, self.w / w_size, axes=(1, 2))
         return cos
+        
+    def __l2norm_similarity(self, x):
+        batch = x.shape[0]
+        map_h = self.w.shape[0]
+        map_w = self.w.shape[1]
+        l2norm = np.sum((x.reshape(batch, 1, 1, -1) - self.w.reshape(1, map_h, map_w, -1)) ** 2, axis=3)
+        return -1 * l2norm  
         
     def __winner_indices(self, x):
         x = x.reshape(x.shape[0], -1)

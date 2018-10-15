@@ -32,17 +32,14 @@ class CentralNucleus(object):
               
         
 if __name__ == '__main__':
-    import six
+    import time
 
-    ce = CentralNucleus(in_size=100, out_size=2)
+    ce = CentralNucleus(in_size=8, out_size=3)
     
-    x0 = np.random.rand(1, 100)
-    x1 = np.random.rand(1, 100)
-    t0 = np.eye(2)[0].reshape(1, -1)
-    t1 = np.eye(2)[1].reshape(1, -1)
+    x0 = np.random.rand(1, 8)
+    t0 = np.eye(3)[0].reshape(1, -1)
     
-    for i in six.moves.range(10):
-        print('x0:', ce.inference(x0))
-        ce.update(t0, lr=0.1)
-        print('x1:', ce.inference(x1))
-        ce.update(t1, lr=0.1)
+    s1 = time.time()
+    y = ce.inference(x0)
+    ce.update(t0, 0.01)
+    print time.time() - s1
