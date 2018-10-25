@@ -6,6 +6,7 @@ from amygdala.layer import CentralNucleus as CE
 import numpy as np
 import cv2
 import six
+import os
 
 class Amygdala(object):
     def __init__(self):
@@ -27,22 +28,29 @@ class Amygdala(object):
 
 amy = Amygdala()
 
-face = np.load('data/face.npz')
-face_buri = face['buri'].reshape(1, 100, -1).astype(np.float32) / 255.0
-face_miyo = face['miyo'].reshape(1, 100, -1).astype(np.float32) / 255.0
-face_sika = face['sika'].reshape(1, 100, -1).astype(np.float32) / 255.0
-fs = np.append(face_buri, face_miyo, axis=0)
-fs = np.append(fs, face_sika, axis=0)
+#face = np.load('data/face.npz')
+#face_buri = face['buri'].reshape(1, 100, -1).astype(np.float32) / 255.0
+#face_miyo = face['miyo'].reshape(1, 100, -1).astype(np.float32) / 255.0
+#face_sika = face['sika'].reshape(1, 100, -1).astype(np.float32) / 255.0
+#fs = np.append(face_buri, face_miyo, axis=0)
+#fs = np.append(fs, face_sika, axis=0)
+faces = []
+files = os.listdir('data/img')
+for f in files:
+    img = cv2.imread('data/img/' + f)
+    img = cv2.resize(img, (64, 64))
+    img = img.astype(np.float32) / 255.0
+    faces.append(img)
 
 def pretraining():
     dammy_t = np.zeros((1, 3))
 
     for i in six.moves.range(5000):
-        x1 = [fs[int(np.random.randint(3))][int(np.random.randint(100))].reshape(1, -1)]    # face
+        x1 = [faces[int(np.random.randint(8))].reshape(1, -1)]                              # face
         x2 = [np.eye(3)[int(np.random.randint(3))].reshape(1, -1)]                          # place
-        x2.append(np.eye(3)[int(np.random.randint(3))].reshape(1, -1))                       # time
+        x2.append(np.eye(3)[int(np.random.randint(3))].reshape(1, -1))                      # time
         amy.inference(x1, x2)
-        amy.update(dammy_t, lr_la=0.1, var_la=1.2, lr_ce=0.0)
+        amy.update(dammy_t, lr_la=0.1, var_la=1.0, lr_ce=0.0)
         
         img_f = np.zeros((64*8, 64*8, 3))
         for row in six.moves.range(8):
@@ -52,8 +60,8 @@ def pretraining():
         img_p = cv2.resize(amy.la2.soms[0].w, (200, 200), interpolation=cv2.INTER_NEAREST)
         img_t = cv2.resize(amy.la2.soms[1].w, (200, 200), interpolation=cv2.INTER_NEAREST)
         cv2.imshow('face', img_f)
-        cv2.imshow('place', img_p)
-        cv2.imshow('time', img_t)
+        #cv2.imshow('place', img_p)
+        #cv2.imshow('time', img_t)
         cv2.waitKey(1)
     
     cv2.imwrite('face.png', img_f * 255)
@@ -78,16 +86,18 @@ def could_you_get_that(x1, x2, x3, t, lr):
 print('pretraining')
 pretraining()
 
+'''
 print('Person 0 in place 0 order 0 at 0')
 for i in six.moves.range(5):
-    print(could_you_get_that(0, 0, 0, 0, 1.5))
+    print(could_you_get_that(0, 0, 0, 0, 1.0))
 
 print('Person 0 in place 1 order 1 at 1')
 for i in six.moves.range(5):
-    print(could_you_get_that(0, 1, 1, 1, 1.5))
+    print(could_you_get_that(0, 1, 1, 1, 1.0))
     
 print('Person 0 in place 0 order 0 at 0')
 print(could_you_get_that(0, 0, 0, 0, 0.0))
 
 print('Person 0 in place 1 order 1 at 1')
 print(could_you_get_that(0, 1, 1, 1, 0.0))
+'''
