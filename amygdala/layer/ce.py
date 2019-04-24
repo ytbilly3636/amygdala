@@ -42,4 +42,4 @@ if __name__ == '__main__':
     s1 = time.time()
     y = ce.inference(x0)
     ce.update(t0, 0.01)
-    print time.time() - s1
+    print(time.time() - s1)
